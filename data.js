@@ -34,7 +34,7 @@ const certDatabase = [
   // 在此下方添加新企业
   {
     company: "北京",
-    certId: "20240001",
+    certId: "20240002",
     info: {
       category: "GB/T 17671-2021《建筑材料防火标准》",
       status: "有效",
@@ -44,4 +44,5 @@ const certDatabase = [
     }
   }
 ];
+
 
