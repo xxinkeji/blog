@@ -30,5 +30,18 @@ const certDatabase = [
       issueDate: "2024年01月15日",
       expiryDate: "2027年01月14日"
     }
+  },
+  // 在此下方添加新企业
+  {
+    company: "北京",
+    certId: "20240001",
+    info: {
+      category: "GB/T 17671-2021《建筑材料防火标准》",
+      status: "有效",
+      scope: ["防火涂料", "阻燃板材", "耐火玻璃"],
+      issueDate: "2024年01月15日",
+      expiryDate: "2027年01月14日"
+    }
   }
 ];
+
