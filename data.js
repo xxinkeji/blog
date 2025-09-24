@@ -37,20 +37,17 @@ const certDatabase = [
   },
   // 在此下方添加新企业
   {
-    company: "北京世纪美雅商贸有限公司1",
-    certId: "HQLS202423204",
+    company: "上海",
+    certId: "20240001",
     info: {
-      category: "T/CECS 10039-2019《绿色建材评价墙体涂料》",
+      category: "GB/T 17671-2021《建筑材料防火标准》",
       status: "有效",
-      scope: [
-        "粉刷石膏", "轻质抹灰石膏", "嵌石", 
-        "高强石", "外墙柔性腻子", "耐水腻子",
-        "环保腻子。"
-      ],
-      issueDate: "2024年12月08日",
-      expiryDate: "2027年12月07日"
+      scope: ["防火涂料", "阻燃板材", "耐火玻璃"],
+      issueDate: "2024年01月15日",
+      expiryDate: "2027年01月14日"
     }
   }
 ];
+
 
 
