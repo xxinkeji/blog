@@ -37,7 +37,7 @@ const certDatabase = [
   },
   // 在此下方添加新企业
   {
-    company: "北京世纪美雅商贸有限公司",
+    company: "北京世纪美雅商贸有限公司1",
     certId: "HQLS202423204",
     info: {
       category: "T/CECS 10039-2019《绿色建材评价墙体涂料》",
@@ -52,4 +52,5 @@ const certDatabase = [
     }
   }
 ];
+
 
