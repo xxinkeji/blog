@@ -24,7 +24,7 @@ const certDatabase = [
     company: "北京世纪美雅商贸有限公司",
     certId: "HQLS202423235",
     info: {
-      category: "T/CECS 10048-2019《绿色建材评价预拌砂浆》",
+      category: "T/CECS 10048-2019《绿色建材评价——预拌砂浆》",
       status: "有效",
       scope: [
         "聚合物抗裂砂浆", "聚合物粘接砂浆", "瓷砖粘接剂", 
@@ -40,7 +40,7 @@ const certDatabase = [
     company: "北京世纪美雅商贸有限公司",
     certId: "HQLS202423204",
     info: {
-      category: "T/CECS 10039-2019《绿色建材评价墙面涂料》",
+      category: "T/CECS 10039-2019《绿色建材评价——墙面涂料》",
       status: "有效",
       scope: [
         "粉刷石膏", "轻质抹灰石膏", "嵌缝石膏", 
@@ -52,6 +52,7 @@ const certDatabase = [
     }
   }
 ];
+
 
 
 
