@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 核心优化：viewport-fit=cover 适配 iPhone 刘海屏，禁止缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>2026 马年大吉</title>
+    <style>
+        /* --- 全局设置 --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #020012; /* 深邃夜空蓝 */
+            overflow: hidden; /* 禁止滚动 */
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            touch-action: none; /* 禁止微信浏览器默认的滑动行为 */
+            -webkit-user-select: none; /* 禁止长按选中文本 */
+            user-select: none;
+            -webkit-tap-highlight-color: transparent; /* 去除点击高亮 */
+        }
+
+        /* --- 背景画布 (烟花层) --- */
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* --- 中心内容容器 --- */
+        .container {
+            position: absolute;
+            top: 40%; /* 稍微往上提一点，给下方大字腾出空间 */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            pointer-events: none; /* 关键：让点击直接穿透到 Canvas，点字也能放烟花 */
+        }
+
+        /* --- 2026 数字特效 --- */
+        .year-text {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0;
+            /* 奢华流金渐变 */
+            background: linear-gradient(to bottom, #cfc09f 22%, #ffecb3 24%, #3a2c0f 26%, #99843c 27%, #ffc640 40%, #f4d03f 78%); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            letter-spacing: -2px;
+        }
+
+        /* --- 祝福语特效 --- */
+        .greeting-text {
+            font-size: 2.5rem;
+            margin-top: 20px; /* 稍微增加一点间距 */
+            color: #e60012;
+            text-shadow: 
+                0 0 5px rgba(255,255,255,0.8),
+                0 0 10px #ff00de,
+                0 0 20px #ff00de;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        .sub-text {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 15px;
+            letter-spacing: 4px;
+            font-weight: 300;
+        }
+
+        /* --- 动画定义 --- */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- 移动端适配 --- */
+        @media (max-width: 768px) {
+            .year-text { font-size: 3.8rem; }
+            .greeting-text { font-size: 1.8rem; }
+            .sub-text { font-size: 1rem; }
+            /* 移动端也同步调整提示文字大小，与 sub-text 保持一致 */
+            .tap-hint { font-size: 1rem !important; }
+        }
+        
+        /* 底部提示文字 */
+        .tap-hint {
+            position: absolute;
+            top: 70%; /* 放到页面下方约三分之一处 */
+            width: 100%;
+            text-align: center;
+            color: rgba(255,255,255,0.6); /* 稍微增加可见度 */
+            /* 修改为与 sub-text 一样大 */
+            font-size: 1.1rem; 
+            font-weight: normal; /* 去掉加粗，使其更像提示语 */
+            letter-spacing: 2px; /* 稍微加点字间距 */
+            z-index: 5;
+            pointer-events: none; /* 关键：防止遮挡点击 */
+            animation: fadeHint 3s infinite;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5); /* 增加一点阴影让文字更清晰 */
+        }
+
+        @keyframes fadeHint {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 删除了马的 SVG 图标 -->
+        
+        <h1 class="year-text">2026</h1>
+        <div class="greeting-text">马年吉祥</div>
+        <div class="sub-text">马到成功 · 万事如意</div>
+    </div>
+
+    <!-- 这里修改了文字：点击 -> 摁住 -->
+    <div class="tap-hint">摁住屏幕 燃放烟花</div>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+        // --- 核心烟花逻辑 (优化性能版) ---
+        window.requestAnimFrame = (function() {
+            return window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+        })();
+
+        var canvas = document.getElementById('canvas'),
+            ctx = canvas.getContext('2d'),
+            cw = window.innerWidth,
+            ch = window.innerHeight,
+            fireworks = [],
+            particles = [],
+            hue = 120,
+            limiterTotal = 3, // 【关键优化】数字越小发射越快，调到3让跟随更丝滑
+            limiterTick = 0,
+            timerTotal = 30, 
+            timerTick = 0,
+            mousedown = false,
+            mx, my;
+
+        canvas.width = cw;
+        canvas.height = ch;
+
+        function random(min, max) { return Math.random() * (max - min) + min; }
+        function calculateDistance(p1x, p1y, p2x, p2y) {
+            return Math.sqrt(Math.pow(p1x - p2x, 2) + Math.pow(p1y - p2y, 2));
+        }
+
+        // 烟花弹升空
+        function Firework(sx, sy, tx, ty) {
+            this.x = sx; this.y = sy;
+            this.sx = sx; this.sy = sy;
+            this.tx = tx; this.ty = ty;
+            this.distanceToTarget = calculateDistance(sx, sy, tx, ty);
+            this.distanceTraveled = 0;
+            this.coordinates = [];
+            this.coordinateCount = 3;
+            while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+            this.angle = Math.atan2(ty - sy, tx - sx);
+            this.speed = 2;
+            this.acceleration = 1.05;
+            this.brightness = random(60, 80); 
+            this.targetRadius = 1;
+        }
+
+        Firework.prototype.update = function(index) {
+            this.coordinates.pop();
+            this.coordinates.unshift([this.x, this.y]);
+            if (this.targetRadius < 8) this.targetRadius += 0.3; else this.targetRadius = 1;
+            this.speed *= this.acceleration;
+            var vx = Math.cos(this.angle) * this.speed,
+                vy = Math.sin(this.angle) * this.speed;
+            this.distanceTraveled = calculateDistance(this.sx, this.sy, this.x + vx, this.y + vy);
+
+            if (this.distanceTraveled >= this.distanceToTarget) {
+                createParticles(this.tx, this.ty);
+                fireworks.splice(index, 1);
+            } else {
+                this.x += vx; this.y += vy;
+            }
+        }
+
+        Firework.prototype.draw = function() {
+            ctx.beginPath();
+            ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+            ctx.lineTo(this.x, this.y);
+            ctx.strokeStyle = 'hsl(' + hue + ', 100%, ' + this.brightness + '%)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+
+        // 爆炸粒子
+        function Particle(x, y) {
+            this.x = x; this.y = y;
+            this.coordinates = [];
+            this.coordinateCount = 5;
+            while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+            this.angle = random(0, Math.PI * 2);
+            this.speed = random(1, 12); 
+            this.friction = 0.95;
+            this.gravity = 1.2; 
+            this.hue = random(hue - 20, hue + 20);
+            this.brightness = random(60, 90);
+            this.alpha = 1;
+            this.decay = random(0.015, 0.03);
+        }
+
+        Particle.prototype.update = function(index) {
+            this.coordinates.pop();
+            this.coordinates.unshift([this.x, this.y]);
+            this.speed *= this.friction;
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed + this.gravity;
+            this.alpha -= this.decay;
+            if (this.alpha <= this.decay) particles.splice(index, 1);
+        }
+
+        Particle.prototype.draw = function() {
+            ctx.beginPath();
+            ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+            ctx.lineTo(this.x, this.y);
+            // 增加金色(45)和红色(0/360)的概率，符合节日气氛
+            var rand = Math.random();
+            var finalHue = this.hue;
+            if(rand > 0.8) finalHue = 45; // 金色
+            else if(rand > 0.6) finalHue = 0; // 红色
+
+            ctx.strokeStyle = 'hsla(' + finalHue + ', 100%, ' + this.brightness + '%, ' + this.alpha + ')';
+            ctx.stroke();
+        }
+
+        function createParticles(x, y) {
+            var particleCount = 40; 
+            while (particleCount--) { particles.push(new Particle(x, y)); }
+        }
+
+        function loop() {
+            requestAnimFrame(loop);
+            hue += 0.5;
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'; // 拖尾更长一点 (透明度越低拖尾越长)
+            ctx.fillRect(0, 0, cw, ch);
+            ctx.globalCompositeOperation = 'lighter';
+
+            var i = fireworks.length;
+            while (i--) { fireworks[i].draw(); fireworks[i].update(i); }
+            var i = particles.length;
+            while (i--) { particles[i].draw(); particles[i].update(i); }
+
+            if (timerTick >= timerTotal) {
+                if (!mousedown) {
+                    // 自动燃放：稍微随机一点的高度
+                    fireworks.push(new Firework(cw / 2, ch, random(0, cw), random(0, ch / 2.5)));
+                    timerTick = 0;
+                }
+            } else { timerTick++; }
+
+            if (limiterTick >= limiterTotal) {
+                if (mousedown) {
+                    // 【关键优化】跟随手指位置，并加入微小的随机偏移(+-10px)，让拖尾更自然丰满
+                    fireworks.push(new Firework(cw / 2, ch, mx + random(-10, 10), my + random(-10, 10)));
+                    limiterTick = 0;
+                }
+            } else { limiterTick++; }
+        }
+
+        // --- 微信/移动端触摸交互完美适配 ---
+        function handleStart(x, y) {
+            mousedown = true;
+            mx = x;
+            my = y;
+        }
+
+        canvas.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            handleStart(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop);
+        });
+
+        canvas.addEventListener('touchstart', function(e) {
+            e.preventDefault(); // 关键：禁止页面滚动
+            handleStart(e.touches[0].pageX - canvas.offsetLeft, e.touches[0].pageY - canvas.offsetTop);
+        }, {passive: false});
+
+        // 【关键新增】添加 touchmove 监听，实现手指滑动时更新坐标，指哪打哪！
+        canvas.addEventListener('touchmove', function(e) {
+            e.preventDefault(); 
+            // 实时更新手指坐标
+            mx = e.touches[0].pageX - canvas.offsetLeft;
+            my = e.touches[0].pageY - canvas.offsetTop;
+        }, {passive: false});
+
+        canvas.addEventListener('mouseup', function(e) { e.preventDefault(); mousedown = false; });
+        canvas.addEventListener('touchend', function(e) { e.preventDefault(); mousedown = false; });
+
+        canvas.addEventListener('mousemove', function(e) {
+            mx = e.pageX - canvas.offsetLeft;
+            my = e.pageY - canvas.offsetTop;
+        });
+        
+        // 窗口尺寸改变时重置 Canvas
+        window.addEventListener('resize', function() {
+            cw = window.innerWidth;
+            ch = window.innerHeight;
+            canvas.width = cw;
+            canvas.height = ch;
+        });
+
+        window.onload = loop;
+    </script>
+</body>
+</html>
