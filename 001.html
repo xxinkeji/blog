@@ -33,7 +33,7 @@
         /* --- 中心内容容器 --- */
         .container {
             position: absolute;
-            top: 45%; /* 稍微往上提一点，视觉平衡 */
+            top: 40%; /* 稍微往上提一点，给下方大字腾出空间 */
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
@@ -89,24 +89,30 @@
             .year-text { font-size: 3.8rem; }
             .greeting-text { font-size: 1.8rem; }
             .sub-text { font-size: 1rem; }
+            /* 移动端也同步调整提示文字大小，与 sub-text 保持一致 */
+            .tap-hint { font-size: 1rem !important; }
         }
         
         /* 底部提示文字 */
         .tap-hint {
             position: absolute;
-            bottom: 40px; /* 避开 iPhone 底部横条 */
+            top: 70%; /* 放到页面下方约三分之一处 */
             width: 100%;
             text-align: center;
-            color: rgba(255,255,255,0.3);
-            font-size: 12px;
+            color: rgba(255,255,255,0.6); /* 稍微增加可见度 */
+            /* 修改为与 sub-text 一样大 */
+            font-size: 1.1rem; 
+            font-weight: normal; /* 去掉加粗，使其更像提示语 */
+            letter-spacing: 2px; /* 稍微加点字间距 */
             z-index: 5;
             pointer-events: none; /* 关键：防止遮挡点击 */
             animation: fadeHint 3s infinite;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5); /* 增加一点阴影让文字更清晰 */
         }
 
         @keyframes fadeHint {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
@@ -120,7 +126,8 @@
         <div class="sub-text">马到成功 · 万事如意</div>
     </div>
 
-    <div class="tap-hint">点击屏幕 燃放烟花</div>
+    <!-- 这里修改了文字：点击 -> 摁住 -->
+    <div class="tap-hint">摁住屏幕 燃放烟花</div>
 
     <canvas id="canvas"></canvas>
 
