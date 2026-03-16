@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>报告验证</title>
+    <style>
+        /* --- 1. 全局重置 --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /* 还原 iOS/Android 原生字体质感 */
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Heiti SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+            background-color: #f2f2f2; /* 微信底色 */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 16px; /* 顶部留白 */
+        }
+
+        /* --- 2. 主体容器 --- */
+        .main-container {
+            width: 100%;
+            /* 外部间距 14px */
+            padding: 0 14px; 
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- 3. 白色卡片 --- */
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            border-radius: 16px; /* 圆角 16px */
+            box-shadow: 0 2px 12px rgba(0,0,0,0.03); 
+            
+            /* 内部间距：上 45px, 左右 28px, 下 80px */
+            padding: 45px 28px 80px 28px; 
+            
+            position: relative;
+            height: fit-content;
+            margin-bottom: 40px;
+        }
+
+        /* --- 4. Logo 区域 --- */
+        .logo-container {
+            display: flex;
+            /* 居中 */
+            justify-content: center;
+            margin-bottom: 28px; 
+        }
+
+        .logo-img {
+            /* 90% 宽度，自然悬浮 */
+            width: 90%; 
+            max-width: 330px; 
+            height: auto;
+            display: block;
+        }
+
+        /* --- 5. 标题区域 --- */
+        .report-title {
+            text-align: center;
+            font-size: 21px;
+            font-weight: 600;
+            color: #000;
+            letter-spacing: 1px;
+            margin-bottom: 32px; 
+            line-height: 1;
+        }
+
+        /* --- 6. 列表排版 --- */
+        .list-item {
+            display: flex;
+            margin-bottom: 12px; 
+            
+            /* 使用 baseline 对齐，保证不同字号的文字在同一基准线上 */
+            align-items: baseline; 
+            
+            line-height: 1.5; 
+        }
+
+        /* 左侧 Label */
+        .label {
+            /* 字号 14px，加粗，比右边大很多 */
+            font-size: 14px; 
+            font-weight: 700; 
+            color: #000; 
+            
+            /* 宽度 58px */
+            width: 58px; 
+            flex-shrink: 0;
+            
+            /* 左对齐 */
+            text-align: left;
+            
+            /* 间距 14px */
+            margin-right: 14px; 
+        }
+
+        /* 右侧 Value */
+        .value {
+            flex: 1;
+            color: #222;
+            font-weight: 400;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-all;
+            
+            /* 【核心修改点】字号进一步缩小到 11px，极其精致 */
+            font-size: 11px; 
+        }
+
+        /* 结论段落 */
+        .conclusion-value {
+            text-align: justify;
+        }
+
+        /* 链接样式 */
+        a {
+            color: #0000EE;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        /* 电脑端预览限制 */
+        @media screen and (min-width: 450px) {
+            .main-container {
+                max-width: 390px;
+                margin: 0 auto;
+            }
+            body {
+                background-color: #333;
+                padding-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="card">
+            
+            <!-- Logo 图片 -->
+            <div class="logo-container">
+                <img src="header.jpg" alt="Logo" class="logo-img">
+            </div>
+
+            <!-- 标题 -->
+            <h1 class="report-title">报告信息</h1>
+
+            <!-- 列表内容 -->
+            <div class="content-list">
+                <div class="list-item">
+                    <div class="label">报告编号</div>
+                    <div class="value">JC2025TL0426</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">委托单位</div>
+                    <div class="value">北京汇众金海建筑材料有限公司</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">收样日期</div>
+                    <div class="value">2025年05月25日</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">样品名称</div>
+                    <div class="value">混凝土硅烷保护剂 </div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">型号规格</div>
+                    <div class="value">——</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">生产单位</div>
+                    <div class="value">北京汇众金海建筑材料有限公司</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">检测依据</div>
+                    <div class="value">详见数据页</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">判定依据</div>
+                    <div class="value">JC/T902-2002《建筑表面用有机硅防水剂》</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">检测项目</div>
+                    <div class="value">外观、PH值、固体含量、稳定性、吸水率比、渗透性。</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">检测结论</div>
+                    <div class="value conclusion-value">该样品经检验，其所检项目符合JC/T902-2002《建筑表面用有机硅防水剂》的指标要求。</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">签发日期</div>
+                    <div class="value">2025年06月29日</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">检测单位</div>
+                    <div class="value">北京建筑材料检验研究院股份有限公司</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">事业部</div>
+                    <div class="value">结构材料检测部</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">网址</div>
+                    <div class="value"><a href="http://www.bmtbj.cn/">http://www.bmtbj.cn/</a></div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">客服电话</div>
+                    <div class="value">010-88724984 / 88749821</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">地址</div>
+                    <div class="value">北京市石景山区金顶北路69号</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
