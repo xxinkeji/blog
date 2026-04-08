@@ -1,94 +1,247 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.5">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'PingFang SC'; -webkit-text-stroke: #000000}
-    span.s1 {font: 12.0px Helvetica; -webkit-text-stroke: 0px #000000}
-    span.s2 {font-kerning: none}
-    span.s3 {font: 12.0px 'PingFang SC'; font-kerning: none; -webkit-text-stroke: 0px #000000}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>报告验证</title>
+    <style>
+        /* --- 1. 全局重置 --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /* 还原 iOS/Android 原生字体质感 */
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Heiti SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+            background-color: #f2f2f2; /* 微信底色 */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 16px; /* 顶部留白 */
+        }
+
+        /* --- 2. 主体容器 --- */
+        .main-container {
+            width: 100%;
+            /* 外部间距 14px */
+            padding: 0 14px; 
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- 3. 白色卡片 --- */
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            border-radius: 16px; /* 圆角 16px */
+            box-shadow: 0 2px 12px rgba(0,0,0,0.03); 
+            
+            /* 内部间距：上 45px, 左右 28px, 下 80px */
+            padding: 45px 28px 80px 28px; 
+            
+            position: relative;
+            height: fit-content;
+            margin-bottom: 40px;
+        }
+
+        /* --- 4. Logo 区域 --- */
+        .logo-container {
+            display: flex;
+            /* 居中 */
+            justify-content: center;
+            margin-bottom: 28px; 
+        }
+
+        .logo-img {
+            /* 90% 宽度，自然悬浮 */
+            width: 90%; 
+            max-width: 330px; 
+            height: auto;
+            display: block;
+        }
+
+        /* --- 5. 标题区域 --- */
+        .report-title {
+            text-align: center;
+            font-size: 21px;
+            font-weight: 600;
+            color: #000;
+            letter-spacing: 1px;
+            margin-bottom: 32px; 
+            line-height: 1;
+        }
+
+        /* --- 6. 列表排版 --- */
+        .list-item {
+            display: flex;
+            margin-bottom: 12px; 
+            
+            /* 使用 baseline 对齐，保证不同字号的文字在同一基准线上 */
+            align-items: baseline; 
+            
+            line-height: 1.5; 
+        }
+
+        /* 左侧 Label */
+        .label {
+            /* 字号 14px，加粗，比右边大很多 */
+            font-size: 14px; 
+            font-weight: 700; 
+            color: #000; 
+            
+            /* 宽度 58px */
+            width: 58px; 
+            flex-shrink: 0;
+            
+            /* 左对齐 */
+            text-align: left;
+            
+            /* 间距 14px */
+            margin-right: 14px; 
+        }
+
+        /* 右侧 Value */
+        .value {
+            flex: 1;
+            color: #222;
+            font-weight: 400;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-all;
+            
+            /* 【核心修改点】字号进一步缩小到 11px，极其精致 */
+            font-size: 11px; 
+        }
+
+        /* 结论段落 */
+        .conclusion-value {
+            text-align: justify;
+        }
+
+        /* 链接样式 */
+        a {
+            color: #0000EE;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        /* 电脑端预览限制 */
+        @media screen and (min-width: 450px) {
+            .main-container {
+                max-width: 390px;
+                margin: 0 auto;
+            }
+            body {
+                background-color: #333;
+                padding-top: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
-<p class="p1"><span class="Apple-converted-space"> </span>&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;检测认证&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.report-table {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-collapse: collapse;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: Arial, sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.report-table caption {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 10px 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #333;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: left;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.report-table th {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f5f5f5;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #ddd;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.report-table td {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #ddd;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>vertical-align: top;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.field {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 120px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f9f9f9;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* 修正后的链接样式 */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.report-table a {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #0000FF;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-decoration: underline;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>pointer-events: auto; /* 确保可点击 */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;<span class="Apple-converted-space">      </span>/* 鼠标指针手型 */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="report-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;table class="report-table"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;th colspan="2"&gt;报告信息&lt;/th&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;报告编号&lt;/td&gt;&lt;td&gt;JC2026WB0289&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;委托单位&lt;/td&gt;&lt;td&gt;北京汇众金海建筑材料有限公司&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;委托日期&lt;/td&gt;&lt;td&gt;2026年01月26日&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;来样日期&lt;/td&gt;&lt;td&gt;2026年01月26日&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;样品名称&lt;/td&gt;&lt;td&gt;外墙涂料（长城灰） &lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;型号规格&lt;/td&gt;&lt;td&gt;——&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;生产单位&lt;/td&gt;&lt;td&gt;北京汇众金海建筑材料有限公司&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;检验依据&lt;/td&gt;&lt;td&gt;GB/T 975-2014《合成树脂乳胶外墙涂料》&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;检测项目&lt;/td&gt;&lt;td&gt;</span><span class="s2">容器中状态、施工性、低稳定性、涂膜外观、干燥时间（表干）、对比率、耐玷污性、耐洗刷性、耐碱性、耐水性、涂层耐温变性、透水性、耐人工气候老化性、粉化、变色。</span><span class="s1">&lt;/td&gt;&lt;/tr&gt;</span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;检测结论&lt;/td&gt;&lt;td&gt;<span class="s3">经检验，送检样品所检项目符合GB/T 975-2014《合成树脂乳液外墙涂料》的技术要求。</span></p>
-<p class="p1">&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;签发日期&lt;/td&gt;&lt;td&gt;2026/03/18 0:00:00&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;检验单位&lt;/td&gt;&lt;td&gt;北京建筑材料检验研究院有限公司&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;事业部&lt;/td&gt;&lt;td&gt;结构材料检测部&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 修复后的网址行 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;td class="field"&gt;网址&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://www.bmtbj.cn/ " target="_blank" onclick="window.open(this.href); return false;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>https://www.bmtbj.cn/</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a &gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;客服电话&lt;/td&gt;&lt;td&gt;010-88724984/88749821&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;&lt;td class="field"&gt;地址&lt;/td&gt;&lt;td&gt;北京市石景山区金顶北路69号&lt;/td&gt;&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/table&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+    <div class="main-container">
+        <div class="card">
+            
+            <!-- Logo 图片 -->
+            <div class="logo-container">
+                <img src="header.jpg" alt="Logo" class="logo-img">
+            </div>
+
+            <!-- 标题 -->
+            <h1 class="report-title">报告信息</h1>
+
+            <!-- 列表内容 -->
+            <div class="content-list">
+                <div class="list-item">
+                    <div class="label">报告编号</div>
+                    <div class="value">JC2025WB1555/div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">委托单位</div>
+                    <div class="value">北京汇众金海建筑材料有限公司</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">收样日期</div>
+                    <div class="value">2025年04月05日</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">样品名称</div>
+                    <div class="value">高性能修补砂浆</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">型号规格</div>
+                    <div class="value">HC-3</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">生产单位</div>
+                    <div class="value">北京汇众金海建筑材料有限公司</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">检测依据</div>
+                    <div class="value">详见数据页</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">判定依据</div>
+                    <div class="value">GB 50728-2011《工程结构加固材料安全性鉴定技术规范》</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">检测项目</div>
+                    <div class="value">劈裂抗压强度、抗折强度、抗压强度、与钢丝绳粘结抗剪强度、与混凝土正拉粘接强度、耐水性能。</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">检测结论</div>
+                    <div class="value conclusion-value">经检验，该样品所检项目符合GB 50728-2011《工程结构加固材料安全性鉴定技术规范》技术要求。</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">签发日期</div>
+                    <div class="value">2025年05月04日</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">检测单位</div>
+                    <div class="value">北京建筑材料检验研究院股份有限公司</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">事业部</div>
+                    <div class="value">砂浆检测部</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">网址</div>
+                    <div class="value"><a href="http://www.bmtbj.cn/">http://www.bmtbj.cn/</a></div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">客服电话</div>
+                    <div class="value">010-88724984 / 88749821</div>
+                </div>
+
+                <div class="list-item">
+                    <div class="label">地址</div>
+                    <div class="value">北京市石景山区金顶北路69号</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
+</html>
 </html>
