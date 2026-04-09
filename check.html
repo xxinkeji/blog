@@ -3,29 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>检测报告</title>
+    <title>检测报告</title> 
     <style>
-        body { margin: 0; padding: 0; font-family: sans-serif; background-color: #f5f5f5; }
-        .header { 
-            background: #fff; 
-            padding: 15px; 
-            text-align: center; 
-            border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .header h1 { margin: 0; font-size: 18px; color: #333; }
-        .header p { margin: 5px 0 0; font-size: 12px; color: #888; }
-        .pdf-container { width: 100%; height: calc(100vh - 70px); }
-        iframe { width: 100%; height: 100%; border: none; }
+        /* 清除所有边距，防止四周出现白边 */
+        body { margin: 0; padding: 0; overflow: hidden; } 
+        /* 让装 PDF 的容器占满整个手机屏幕的高和宽 (100vh 代表 100% 屏幕高度) */
+        .pdf-container { width: 100vw; height: 100vh; }
+        iframe { width: 100%; height: 100%; border: none; display: block; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>检测报告</h1>
-        <p>llkejifuture.com</p>
-    </div>
     <div class="pdf-container">
         <iframe src="report.pdf"></iframe>
     </div>
