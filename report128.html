@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>检测报告 - JC2024ZD0523</title>
+    <title>检测认证</title>
     <style>
         .report-table {
             width: 100%;
@@ -31,14 +31,20 @@
             font-weight: bold;
             background-color: #f9f9f9;
         }
+        /* 修正后的链接样式 */
+        .report-table a {
+            color: #0000FF;
+            text-decoration: underline;
+            pointer-events: auto; /* 确保可点击 */
+            cursor: pointer;      /* 鼠标指针手型 */
+        }
     </style>
 </head>
 <body>
     <div class="report-container">
         <table class="report-table">
-            <caption>检测报告（干拌复合轻集料混凝土）</caption>
             <tr><th colspan="2">报告信息</th></tr>
-            <tr><td class="field">报告编号</td><td>JC2025ZD0523</td></tr>
+            <tr><td class="field">报告编号</td><td>JC2024ZD0523</td></tr>
             <tr><td class="field">委托单位</td><td>北京汇众金海建筑材料有限公司</td></tr>
             <tr><td class="field">委托日期</td><td>2024年12月10日</td></tr>
             <tr><td class="field">来样日期</td><td>2024年12月10日</td></tr>
@@ -51,7 +57,15 @@
             <tr><td class="field">签发日期</td><td>2025/01/15 0:00:00</td></tr>
             <tr><td class="field">检验单位</td><td>北京建筑材料检验研究院有限公司</td></tr>
             <tr><td class="field">事业部</td><td>结构材料检测部</td></tr>
-            <tr><td class="field">网址</td><td>http://www.bmtbj.cn/</td></tr>
+            <!-- 修复后的网址行 -->
+            <tr>
+                <td class="field">网址</td>
+                <td>
+                    <a href="https://www.bmtbj.cn/ " target="_blank" onclick="window.open(this.href); return false;">
+                        https://www.bmtbj.cn/
+                    </a >
+                </td>
+            </tr>
             <tr><td class="field">客服电话</td><td>010-88724984/88749821</td></tr>
             <tr><td class="field">地址</td><td>北京市石景山区金顶北路69号</td></tr>
         </table>
