@@ -54,7 +54,7 @@ const certDatabase = [
   // 在此下方添加新企业
   {
     company: "唐山铭盛建材有限公司",
-    certId: "HQLS202523308",
+    certId: "HQLS202523303",
     info: {
       category: "T/CECS 10048-2019《绿色建材评价——预拌砂浆》",
       status: "有效",
